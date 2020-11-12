@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Vue JS</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="body" style="background-image: linear-gradient(to right, blue , rgb(0, 255, 157)); height: auto;">
+        <div class="container-sm" style="padding:10px">
+            <h1 class="display-4" style="text-align: center; ">To Do List 😆</h1>
+        </div>
+        <div id="app">
+
+            <div v-for="(list, index) in lists" :key="index">
+                <div class= "d-flex justify-content-center">
+                    <div class= "d-flex justify-content-center card my-5" style= " width:25%;text-align: center; padding:15px">
+                        
+                        <div v-if="list.Prioritas=='Penting'" class= "border bg-danger text-center d-flex justify-content-center font-weight-bolder" style= "color: white; margin-top: 10px; font-style:oblique; width: 50%; margin-left: 25%;">
+                            {{ list.Prioritas }}
+                        </div>
+                        <div v-if="list.Prioritas=='Biasa'" class= "border bg-warning  text-center d-flex justify-content-center font-weight-bolder" style= "color: white; margin-top: 10px; font-style:oblique; width: 50%; margin-left: 25%;">
+                            {{ list.Prioritas }}
+                        </div>
+                        <div v-if="list.Prioritas=='Tidak Penting'" class= "border bg-info text-center d-flex justify-content-center font-weight-bolder" style= "color: white; margin-top: 10px; font-style:oblique; width: 50%; margin-left: 25%;">
+                            {{ list.Prioritas }}
+                        </div>
+                        <div class="title" style="font-weight: bold; font-size: 25px; margin-top: 10px;">
+                            {{ list.Judul }}
+                        </div>
+                        <div style="margin-top: 10px;">
+                            {{ list.Isi }}
+                        </div>
+                        <div class= "d-flex justify-content-center">
+                        <button class="btn" style="width: 30%; background-color: tomato; margin: 20px;"v-on:click="deleteList(index)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class= "d-flex justify-content-center" style="margin-top=30%">
+                <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 30%; text-align: center">
+                    <div class="card-body">
+                        <div id="input_todo">
+                            <div class="form-group">
+                                <label for="inputJudul">Nama</label>
+                                <input type="text" class="form-control" id="inputJudul" v-model="inputJudul" placeholder="Input Nama Memo" >
+                            </div>
+                            <div class="form-group">
+                                <label for="inputIsi">Isi</label>
+                                <input type="text" class="form-control" id="inputIsi" v-model="inputIsi" placeholder="Input Isi Memo">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPrioritas">Prioritas</label>
+                                <select v-model="inputPrioritas" class="form-control" id="inputPrioritas">
+                                    <option disabled value="">Pilih Prioritas</option>
+                                    <option>Penting</option>
+                                    <option>Biasa</option>
+                                    <option>Tidak Penting</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-success" v-on:click="submitForm" style="width: 30%;">Tambah</button>
+                            <button type="button" class="btn btn-danger" v-on:click="resetForm" style="width: 30%;">Batal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+            
+                
+            <div class="fixed-bottom" >
+                <footer class="text-center mt-5" style="margin-bottom: 20px;">
+                    {{ `${user.Judul} | ${user.npm} | ${user.kelas}` }}
+                    
+                </footer>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            inputJudul: "",
+            inputIsi: "",
+            inputPrioritas: "",
+            user: {
+                Judul:'Nicholas Edson Simorangkir',
+                npm:'180709990',
+                kelas: 'A',
+            },
+            lists: [
+
+            ]
+        },
+        methods: {
+            resetForm() {
+                this.inputJudul = ""
+                this.inputIsi = ""
+                this.inputPrioritas = ""
+            },
+            submitForm() {
+                if(!this.inputJudul=="" && !this.inputIsi=="" && !this.inputPrioritas=="" )
+                   { this.lists.push({Judul: this.inputJudul, Prioritas: this.inputPrioritas, Isi: this.inputIsi})
+                    this.resetForm() }
+            },
+            deleteList(index) {
+                this.lists.splice(index, 1)
+            }
+        },
+    });
+</script>
+</html>
